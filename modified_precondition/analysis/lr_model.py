@@ -77,6 +77,7 @@ def Classification(df_detail,features,featurey,featue_selection):
     # ############################################
     X_train, X_test, y_train, y_test = cross_validation.train_test_split(X, Y, test_size=0.3, random_state=0)
     # print 'X_train[1]:',X_train[1]
+    # print 'y_train[1]:',y_train[1]
 
 
     #####LR######
@@ -287,6 +288,53 @@ def Replication(fea):
     print len(addf),len(addf2)
     fea=pd.concat([fea,addf2,chat2])
     return fea
+def get_train_test(df_detail,features,featurey):
+    df_X=df_detail[features]   # print df_X.isnull().values.any()
+    X=numpy.array(df_X)
+    Y=list(df_detail[featurey])
+    X_train, X_test, y_train, y_test = cross_validation.train_test_split(X, Y, test_size=0.3, random_state=0)
+    print 'X_train[1]:',X_train[1]
+    print 'y_train[1]:',y_train[1]
+    gen_pos_neg(X_train,y_train,'train')
+    gen_pos_neg(X_test,y_test,'test')
+
+def gen_pos_neg(feature_l,lable_l,train_test):
+    feature_file_pos = "/../data/%s_pos"%train_test
+    feature_file_neg = "/../data/%s_neg"%train_test
+
+    pos_list = []
+    pos_dict = {}
+    neg_list = []
+    neg_dict = {}
+    count_pos = 0
+    count_neg = 0
+    for i in range(len(feature_l)):
+        x=feature_l[i]
+        y=lable_l[i]
+        if y == "1":
+            pos_list.append(count_pos)
+            pos_dict[count_pos] = x
+            count_pos += 1
+        elif y == "0":
+            neg_list.append(count_neg)
+            neg_dict[count_neg] = x
+            count_neg += 1
+    data_list = []
+    for count_pos in pos_list:
+        data_list.append(pos_dict[count_pos])
+    writer = open(feature_file_pos, "w")
+    for one in data_list:
+        writer.write(','.join(str(one)) + "\n")
+    writer.close()
+
+    data_list = []
+    for count_neg in neg_list:
+        data_list.append(neg_dict[count_neg])
+    writer = open(feature_file_neg, "w")
+    for one in data_list:
+        writer.write(','.join(str(one)) + "\n")
+    writer.close()
+
 if __name__ == "__main__":
     # print '--------------------GEEK STATISTICS--------------------'
     # action_list=['app-active','chat','chat-read','detail-boss','list-boss','list-notify','msg-return'] #缁熻閲忔秹鍙婄殑action
@@ -337,9 +385,9 @@ if __name__ == "__main__":
         print 'final length:',len(fea)
 
         print '--------------------CTR PLOT-------------------'
-        for feature in basic_features:
-            HistPlot('plots_after_replication/',fea,15,feature,False,False)
-            CtrPlot('plots_after_replication/',fea[[feature,'flag']],15,feature)
+        # for feature in basic_features:
+            # HistPlot('plots_after_replication/',fea,15,feature,False,False)
+            # CtrPlot('plots_after_replication/',fea[[feature,'flag']],15,feature)
         print '--------------Correlation---------'
         # Correlation(fea,basic_features)
         # print '--------------AUC---------'
@@ -347,6 +395,8 @@ if __name__ == "__main__":
         # auc=pd.concat(prob_auc_list)
         # auc=auc.sort_values(by='auc',ascending=[False])
         # auc.to_csv('single_auc.txt',sep='\t')
+        print '------------get_train_test-----------'
+        get_train_test(fea,basic_features,featurey)
     # else:
     #
     #     print '****************FEATURE PROCESSING****************'
