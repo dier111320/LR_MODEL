@@ -1,0 +1,7 @@
+.*
+*~
+*.log
+!.gitignore
+*.pyc
+/.idea
+**/modified/pre/test.py
