@@ -4,6 +4,7 @@
 *.pyc
 /.idea
 **/modified_precondition/test.py
+**/modified_precondition/pre/test
 **/modified_precondition/test1.txt
 **/modified_precondition/test2.txt
 **/modified_precondition/data/features_0104.txt
