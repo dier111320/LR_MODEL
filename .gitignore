@@ -1,9 +1,9 @@
 .*
 *~
 *.log
-!.gitignore
 *.pyc
 /.idea
+!.gitignore
 **/modified/test.py
 **/modified/test1.txt
 **/modified/test2.txt
@@ -12,5 +12,3 @@
 **/modified/data/test_pos_dl
 **/modified/data/train_pos_dl
 **/modified/data/train_neg_dl
-**/modified/data2
-**/modified/result
