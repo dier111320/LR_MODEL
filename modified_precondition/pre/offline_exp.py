@@ -322,7 +322,7 @@ class PreProcess:
 
 
 #def run(conf_dict):
-def run(Base_Dir_40p208, date, conf_dict, train_list, test_list):
+def run(conf_dict):
 
     # train_pos = Base_Dir_40p208 + "/../data/lr/feature_set/{0}/{1}/{2}/train_pos".format(cid, bid, date)
     # train_neg = Base_Dir_40p208 + "/../data/lr/feature_set/{0}/{1}/{2}/train_neg".format(cid, bid, date)
@@ -349,10 +349,10 @@ def run(Base_Dir_40p208, date, conf_dict, train_list, test_list):
     # 本地开发
 
     DIR = os.path.abspath(os.curdir +"/../");
-    train_pos = '%s/data/train_pos_dl' % DIR
-    train_neg = "%s/data/train_neg_dl" % DIR
-    test_pos = "%s/data/test_pos_dl" % DIR
-    test_neg = "%s/data/test_neg_dl" % DIR
+    train_pos = '%s/data/train_pos' % DIR
+    train_neg = "%s/data/train_neg" % DIR
+    test_pos = "%s/data/test_pos" % DIR
+    test_neg = "%s/data/test_neg" % DIR
     train_pos_processed = "%s/data2/train_pos_processed" % DIR
     train_neg_processed = "%s/data2/train_neg_processed" % DIR
     test_pos_processed = "%s/data2/test_pos_processed" % DIR
@@ -414,21 +414,10 @@ if __name__ == "__main__":
                  'train_days': '3',
                   'sample': 'True'
                   }
-
-    Base_Dir_40p208 = "/opt/bre/rec/feature_project/script"
-    date='2015-11-01'
-    cid = "Czgc_pc"
-    bid = "949722CF_12F7_523A_EE21_E3D591B7E755"
-    train_list = ['2015-10-29', '2015-10-28', '2015-10-27', '2015-10-26', '2015-10-25']
-    test_list = ['2015-11-01', '2015-10-31', '2015-10-30']
     '''
     conf_dict = {
                  'app_active': 'discrete_freq:13',
                  'General':{'select_features': 'app_active'},
                 }
-    Base_Dir_40p208 = "./data"
-    date='2015-11-01'
-    train_list = ['2015-10-29', '2015-10-28', '2015-10-27', '2015-10-26', '2015-10-25']
-    test_list = ['2015-11-01', '2015-10-31', '2015-10-30']
-    run(Base_Dir_40p208, date, conf_dict, train_list, test_list)
+    run(conf_dict)
     #run(conf_dict)

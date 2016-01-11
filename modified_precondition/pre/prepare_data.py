@@ -45,15 +45,15 @@ def get_common_fields(Base_Dir_208, date, cid, bid, type):
         exit()
 '''
 
-def get_feature_columns(head_features, feature_file, tail_features, conf):
+def get_feature_columns(feature_file,conf):
 
     if not os.path.exists(feature_file):
         print "prepare_data.py - get_feature_columns() : feature file does not exist : {0}".format(feature_file)
         exit()
 
     features_all = []
-    for feat in head_features:
-        features_all.append(feat)
+    # for feat in head_features:
+    #     features_all.append(feat)
 
     with open(feature_file) as f:
         for line in f:
@@ -66,8 +66,8 @@ def get_feature_columns(head_features, feature_file, tail_features, conf):
                 if len(chunk) == 0:
                     continue
                 features_all.append(chunk)
-    for feat in tail_features:
-        features_all.append(feat)
+    # for feat in tail_features:
+    #     features_all.append(feat)
 
     features_select = []
     if not conf["General"].has_key('select_features'):
@@ -239,6 +239,7 @@ def get_combine(baseDir, date, train_date_list, test_date_list, SUBDIR='data'):
     file_paths = {}
     for file_name in train_path_names + test_path_names:
         file_path = "%s/%s/%s/%s" % (baseDir, SUBDIR, date, file_name)
+        print file_path
         file_paths[file_name] = file_path
         #清空目录
         do_remove(file_path)
@@ -282,14 +283,14 @@ def run(Base_Dir_208, Base_Dir_share, date, conf):
 
     for deal_date in train_list + test_list:
         # "个性"特征 
-        feature_file = Base_Dir_208 + "/../conf/default/{0}.feature".format(deal_date)
+        feature_file = Base_Dir_208 + "all_feature.txt"
         # "共性"特征 
         # co_features = get_common_fields(Base_Dir_208, deal_date, cid, bid, "3")
         # 获取特征子集（select），index:在全部特征中的索引 
-        tail_features = ["date"]
+        # tail_features = ["date"]
         features_name, features_index = get_feature_columns(co_features, feature_file, tail_features, conf)
 
-        label_index = co_features.index("label")
+        label_index = features_name.index("label")
         rate = get_sample_rate(conf)
 
         print "Deal :", deal_date
@@ -317,7 +318,7 @@ if __name__ == "__main__":
     bid = "949722CF_12F7_523A_EE21_E3D591B7E755"
     conf_dict={'visit_1day': 'discrete,freq,17', 'select_features': 'click_rate_15day,click_rate_1day,feedback_15day,realresponse_15day,visit_1day', 'sample_proportion': '1:7', 'test_days': '1', 'feedback_15day': 'discrete,freq,10', 'train_days': '1', 'realresponse_15day': 'discrete,freq,13', 'sample': 'True', 'click_rate_1day': 'normalize', 'click_rate_15day': 'normalize'}
 
-    DIR = os.path.abspath(os.curdir+"/../data")
-    get_combine(DIR,date,['2015-10-10','2015-10-11','2015-10-13'],['2015-10-12','2015-10-13'])
-    # run(Base_Dir_208,Base_Dir_share,date, cid, bid, conf_dict)
+    DIR = os.path.abspath(os.curdir+"/../")
+    # get_combine(DIR,date,['2015-10-10','2015-10-11'],['2015-10-12','2015-10-13'])
+    run(Base_Dir_208,Base_Dir_share,date, cid, bid, conf_dict)
 
