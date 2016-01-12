@@ -3,10 +3,10 @@
 *.log
 *.pyc
 /.idea
-**/modified_precondition/data/test_neg
-**/modified_precondition/data/test_pos
-**/modified_precondition/data/train_pos
-**/modified_precondition/data/train_neg
-**/modified_precondition/data2
-**/modified_precondition/result
-**/modified_precondition/analysis/plots_after_replication
+/modified_precondition/data/test_neg
+/modified_precondition/data/test_pos
+/modified_precondition/data/train_pos
+/modified_precondition/data/train_neg
+/modified_precondition/data2
+/modified_precondition/result
+/modified_precondition/analysis/plots_after_replication

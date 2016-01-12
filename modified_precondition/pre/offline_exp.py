@@ -375,6 +375,7 @@ def run(conf_dict):
         for weight in coef[0][sum(processed_length[:i]) : sum(processed_length[:i+1])]:
             writer.write("{0}\n".format(weight))
     writer.write("\nauc:\n")
+    print 'auc:',auc
     writer.write("{0}\n".format(auc))
     writer.close()
 
@@ -416,7 +417,7 @@ if __name__ == "__main__":
                   }
     '''
     conf_dict = {
-                 'app_active': 'discrete_freq:13',
+                 'app_active': 'discrete_freq:10',
                  'General':{'select_features': 'app_active'}
                 }
     run(conf_dict)
