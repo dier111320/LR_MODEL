@@ -293,13 +293,14 @@ def get_train_test(df_detail,features,featurey):
     X=numpy.array(df_X)
     Y=list(df_detail[featurey])
     X_train, X_test, y_train, y_test = cross_validation.train_test_split(X, Y, test_size=0.3, random_state=0)
-    print 'X_train[1]:',X_train[1]
-    print 'y_train[1]:',y_train[1]
-    gen_pos_neg(X_train,y_train,'train')
-    gen_pos_neg(X_test,y_test,'test')
+    print 'X_train[0:2]:',X_train[0:2]
+    print 'y_train[0:2]:',y_train[0:2]
+    gen_pos_neg(X_train[0:2],y_train[0:2],'train')
+    # gen_pos_neg(X_test,y_test,'test')
 
 def gen_pos_neg(feature_l,lable_l,train_test):
     feature_file_pos = "/../data/%s_pos"%train_test
+    print feature_file_pos
     feature_file_neg = "/../data/%s_neg"%train_test
 
     pos_list = []
@@ -310,6 +311,7 @@ def gen_pos_neg(feature_l,lable_l,train_test):
     count_neg = 0
     for i in range(len(feature_l)):
         x=feature_l[i]
+        print x
         y=lable_l[i]
         if y == "1":
             pos_list.append(count_pos)
@@ -322,9 +324,13 @@ def gen_pos_neg(feature_l,lable_l,train_test):
     data_list = []
     for count_pos in pos_list:
         data_list.append(pos_dict[count_pos])
-    writer = open(feature_file_pos, "w")
+    writer = open(feature_file_neg, 'r')
+    l=writer.readline()
+    print '###',l
     for one in data_list:
-        writer.write(','.join(str(one)) + "\n")
+        print 'pos',','.join(str(o) for o in one)
+        # writer.write(','.join(str(o) for o in one) + "\n")
+        # writer.write('s')
     writer.close()
 
     data_list = []
@@ -332,7 +338,8 @@ def gen_pos_neg(feature_l,lable_l,train_test):
         data_list.append(neg_dict[count_neg])
     writer = open(feature_file_neg, "w")
     for one in data_list:
-        writer.write(','.join(str(one)) + "\n")
+        print 'neg',','.join(str(o) for o in one)
+        writer.write(','.join(str(o) for o in one) + "\n")
     writer.close()
 
 if __name__ == "__main__":
