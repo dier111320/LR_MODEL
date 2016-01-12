@@ -417,7 +417,7 @@ if __name__ == "__main__":
     '''
     conf_dict = {
                  'app_active': 'discrete_freq:13',
-                 'General':{'select_features': 'app_active'},
+                 'General':{'select_features': 'app_active'}
                 }
     run(conf_dict)
     #run(conf_dict)
